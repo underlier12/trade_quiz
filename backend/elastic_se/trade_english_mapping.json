@@ -1,0 +1,18 @@
+{
+  "mappings": {
+    "properties": {
+      "article": {
+        "type": "keyword"
+      },
+      "version": {
+        "type": "keyword"
+      },
+      "content": {
+        "type": "text"
+      },
+      "timestamp": {
+        "type": "date"
+      }
+    }
+  }
+}

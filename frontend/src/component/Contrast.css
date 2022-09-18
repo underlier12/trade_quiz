@@ -1,0 +1,26 @@
+.searchResultContainer {
+    display: flex;
+    border: 5px solid #ffcc5c;
+}
+
+.left {
+    /* color: white;
+    background-color: red; */
+    /* border: 5px solid #ffcc5c; */
+    width: 50vh;
+}
+
+.innerLeft {
+    white-space: pre-line;
+}
+
+.right {
+    /* color: white; */
+    /* background-color: blue; */
+    /* border: 5px solid #ffcc5c; */
+    width: 50vh;
+}
+
+/* .innerRight {
+    white-space: pre-line;
+} */

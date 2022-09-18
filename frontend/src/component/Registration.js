@@ -3,11 +3,11 @@ import { useForm } from 'react-hook-form'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function Registration() {
-    const { register, handleSubmit, setValue } = useForm()
+    const { register, handleSubmit } = useForm()
     
     const onSubmit = (event, data) => {
         // event.preventDefault()
-        const REGISTRATION_URL = 'http://localhost:5000/'
+        const REGISTRATION_URL = 'http://localhost:5000/registration/'
         const subject = data.target['subject'].value
         const article = data.target['article'].value
         const version = data.target['version'].value
@@ -53,7 +53,11 @@ function Registration() {
                     </div>
                     <div className='form-group mb-1'>
                         <label className='form-label'>Version</label>
-                        <input className='form-control' {...register('version', {required: true})} />
+                        {/* <input className='form-control' {...register('version', {required: true})} /> */}
+                        <select className='form-control' {...register('version')}>
+                            <option value="english">English</option>
+                            <option value="korean">Korean</option>
+                        </select>
                     </div>
                     <div className='form-group mb-1'>
                         <label className='form-label'>Content</label>

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './Contrast.css'
 
 function Contrast() {
+    const { register, handleSubmit } = useForm()
     const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
     const [output, setOutput] = useState()
@@ -12,16 +13,24 @@ function Contrast() {
     const changeHandler = (event) => {
 		setSelectedFile(event.target.files[0]);
 		setIsFilePicked(true);
+        console.log(isFilePicked)
 	};
 
     const handleSubmission = (event, data) => {
         const QUERY_URL = 'http://localhost:5000/query/'
+        const DASH = '/'
 		const formData = new FormData();
 		formData.append('File', selectedFile);
+        // formData.append('Version', data.target['version'].value)
         
         const subject = data.target['subject'].value
+        const version = data.target['version'].value
+        // console.log(data.target['version'].value)
 
-        const result = fetch(QUERY_URL+subject, {
+        const combinedUrl = QUERY_URL+subject+DASH+version
+        console.log(combinedUrl)
+        
+        fetch(QUERY_URL+subject+DASH+version, {
             method: 'POST',
             body: formData
         })
@@ -39,9 +48,6 @@ function Contrast() {
             })
     }
 
-    const onSubmit = () => {}
-    const { register, handleSubmit, setValue } = useForm()
-
     return (
         <div>
             <div className="card">
@@ -54,12 +60,18 @@ function Contrast() {
                                 <option value="international-payment">International payment</option>
                             </select>
                         </div>
+                        <div className='form-group mb-1'>
+                            <label className='form-label'>Language</label>
+                            <select className='form-control' {...register('version')}>
+                                <option value="eng">English</option>
+                                <option value="kor">Korean</option>
+                            </select>
+                        </div>
                         <div className="form-group mb-1">
                             <label className='form-label'>File upload</label>
                             <input className="form-control" type='file' name='file' onChange={changeHandler}/>
                         </div>
                         <div>
-                            {/* <button onClick={handleSubmission}>Submit</button> */}
                             <input className="mt-2 btn btn-primary" type="submit"/>
                         </div>
                     </form>

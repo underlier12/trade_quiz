@@ -22,17 +22,7 @@ def hello():
     return {"data": time.time()}
 
 # Full text query
-@app.route("/query/trade-english", methods=['POST'])
-def search_document():
-    TEMP_TITLE = 'temp.jpg'
-    file_obj = request.files.get('File')
-    file_obj.save(TEMP_TITLE)
-
-    image = cv2.imread(TEMP_TITLE)
-    text = pytesseract.image_to_string(image)
-    # text = pytesseract.image_to_string(image, lang='kor+eng')
-    # print(text)
-
+def common_search(text):
     query = {
         "query": {
             "match": {
@@ -40,28 +30,51 @@ def search_document():
             }
         }
     }
-
     res = es.search(
         index=TRADE_ENGLISH,
         body=query
     )
-
-    os.remove(TEMP_TITLE)
-
     hits = res['hits']['hits']
     if hits:
         output = hits[0]
     if not hits:
         output = 'No results'
-    print(output)
+    # print(output)
     response = {
         "output": output,
         "original": text
     }
     return response
 
+@app.route("/query/trade-english/eng", methods=['POST'])
+def search_document_eng():
+    TEMP_TITLE = 'temp_eng.jpg'
+    file_obj = request.files.get('File')
+    file_obj.save(TEMP_TITLE)
+
+    image = cv2.imread(TEMP_TITLE)
+    text = pytesseract.image_to_string(image)
+
+    response = common_search(text)
+    os.remove(TEMP_TITLE)
+    return response
+
+@app.route("/query/trade-english/kor", methods=['POST'])
+def search_document_kor():
+    TEMP_TITLE = 'temp_kor.jpg'
+    file_obj = request.files.get('File')
+    file_obj.save(TEMP_TITLE)
+
+    image = cv2.imread(TEMP_TITLE)
+    text = pytesseract.image_to_string(image, lang='kor+eng')
+    print(text)
+
+    response = common_search(text)
+    os.remove(TEMP_TITLE)
+    return response
+
 # Registration
-@app.route("/trade-english", methods=['POST'])
+@app.route("/registration/trade-english", methods=['POST'])
 def insert_document():
     # print(request.json)
     article = request.json['article']
@@ -74,7 +87,6 @@ def insert_document():
         'content': content,
         'timestamp': timestamp
     }
-    # print(doc)
 
     res = es.index(
         index=TRADE_ENGLISH,

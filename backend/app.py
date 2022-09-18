@@ -110,7 +110,7 @@ def insert_document_international_payment():
     }
 
     res = es.index(
-        index=TRADE_ENGLISH,
+        index=INTERNATIONAL_PAYMENT,
         body=doc
     )
     return res

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function Registration() {
     const { register, handleSubmit } = useForm()
+    const [ apiResponse, setApiRespose ] = useState()
     
     const onSubmit = (event, data) => {
         // event.preventDefault()
@@ -25,7 +26,11 @@ function Registration() {
                 content: content
             })
         })
-            .then(res => console.log(res))
+            .then(res => res.json())
+            .then(result => {
+                // console.log(typeof(result))
+                setApiRespose(result)
+            })
             .catch(error => {
                 console.log(error)
             })
@@ -36,38 +41,42 @@ function Registration() {
     }
 
     return (
-        <div className='card'>
-            <h4 className='card-header'>Registration form</h4>
-            <div className='card-body'>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className='form-group mb-1'>
-                        <label className='form-label'>Subject</label>
-                        <select className='form-control' {...register('subject')}>
-                            <option value="trade-english">Trade english</option>
-                            <option value="international-payment">International payment</option>
-                        </select>
-                    </div>
-                    <div className='form-group mb-1'>
-                        <label className='form-label'>Article</label>
-                        <input className='form-control' {...register('article', {required: true})} />
-                    </div>
-                    <div className='form-group mb-1'>
-                        <label className='form-label'>Version</label>
-                        {/* <input className='form-control' {...register('version', {required: true})} /> */}
-                        <select className='form-control' {...register('version')}>
-                            <option value="english">English</option>
-                            <option value="korean">Korean</option>
-                        </select>
-                    </div>
-                    <div className='form-group mb-1'>
-                        <label className='form-label'>Content</label>
-                        <input className='form-control' {...register('content', {required: true})} />
-                    </div>
-                    <div className='mt-4'>
-                        <input className='mb-2 btn btn-primary' type="submit" />
-                    </div>
-                </form>
-
+        <div>
+            <div className='card'>
+                <h4 className='card-header'>Registration form</h4>
+                <div className='card-body'>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className='form-group mb-1'>
+                            <label className='form-label'>Subject</label>
+                            <select className='form-control' {...register('subject')}>
+                                <option value="trade-english">Trade english</option>
+                                <option value="international-payment">International payment</option>
+                            </select>
+                        </div>
+                        <div className='form-group mb-1'>
+                            <label className='form-label'>Article</label>
+                            <input className='form-control' {...register('article', {required: true})} />
+                        </div>
+                        <div className='form-group mb-1'>
+                            <label className='form-label'>Version</label>
+                            {/* <input className='form-control' {...register('version', {required: true})} /> */}
+                            <select className='form-control' {...register('version')}>
+                                <option value="english">English</option>
+                                <option value="korean">Korean</option>
+                            </select>
+                        </div>
+                        <div className='form-group mb-1'>
+                            <label className='form-label'>Content</label>
+                            <input className='form-control' {...register('content', {required: true})} />
+                        </div>
+                        <div className='mt-4'>
+                            <input className='mb-2 btn btn-primary' type="submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div>
+                <pre>{JSON.stringify(apiResponse, null, 2)}</pre>
             </div>
         </div>
     )

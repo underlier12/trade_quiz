@@ -15,6 +15,7 @@ CORS(app)
 es = Elasticsearch()
 
 TRADE_ENGLISH = 'trade_english'
+INTERNATIONAL_PAYMENT = 'international_payment'
 
 # Test
 @app.route("/")
@@ -75,7 +76,27 @@ def search_document_kor():
 
 # Registration
 @app.route("/registration/trade-english", methods=['POST'])
-def insert_document():
+def insert_document_trade_english():
+    # print(request.json)
+    article = request.json['article']
+    version = request.json['version']
+    content = request.json['content']
+    timestamp = datetime.now()
+    doc = {
+        'article': article,
+        'version': version,
+        'content': content,
+        'timestamp': timestamp
+    }
+
+    res = es.index(
+        index=TRADE_ENGLISH,
+        body=doc
+    )
+    return res
+
+@app.route("/registration/international-payment", methods=['POST'])
+def insert_document_international_payment():
     # print(request.json)
     article = request.json['article']
     version = request.json['version']

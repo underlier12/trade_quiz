@@ -31,7 +31,7 @@ function Registration() {
             })
 
         data.target['article'].value = ''
-        data.target['version'].value = ''
+        // data.target['version'].value = ''
         data.target['content'].value = ''
     }
 

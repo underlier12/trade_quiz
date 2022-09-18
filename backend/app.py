@@ -66,7 +66,7 @@ def search_document_kor():
     file_obj.save(TEMP_TITLE)
 
     image = cv2.imread(TEMP_TITLE)
-    text = pytesseract.image_to_string(image, lang='kor+eng')
+    text = pytesseract.image_to_string(image, lang='kor')
     print(text)
 
     response = common_search(text)

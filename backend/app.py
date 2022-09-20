@@ -23,7 +23,7 @@ def hello():
     return {"data": time.time()}
 
 # Full text query
-def common_search(text):
+def common_search(text, index):
     query = {
         "query": {
             "match": {
@@ -32,7 +32,7 @@ def common_search(text):
         }
     }
     res = es.search(
-        index=TRADE_ENGLISH,
+        index=index,
         body=query
     )
     hits = res['hits']['hits']
@@ -40,7 +40,7 @@ def common_search(text):
         output = hits[0]
     if not hits:
         output = 'No results'
-    # print(output)
+
     response = {
         "output": output,
         "original": text
@@ -48,29 +48,54 @@ def common_search(text):
     return response
 
 @app.route("/query/trade-english/eng", methods=['POST'])
-def search_document_eng():
-    TEMP_TITLE = 'temp_eng.jpg'
+def search_document_trade_english_eng():
+    TEMP_TITLE = 'trade_english_eng.jpg'
     file_obj = request.files.get('File')
     file_obj.save(TEMP_TITLE)
 
     image = cv2.imread(TEMP_TITLE)
     text = pytesseract.image_to_string(image)
 
-    response = common_search(text)
+    response = common_search(text, TRADE_ENGLISH)
     os.remove(TEMP_TITLE)
     return response
 
 @app.route("/query/trade-english/kor", methods=['POST'])
-def search_document_kor():
-    TEMP_TITLE = 'temp_kor.jpg'
+def search_document_trade_english_kor():
+    TEMP_TITLE = 'trade_english_kor.jpg'
     file_obj = request.files.get('File')
     file_obj.save(TEMP_TITLE)
 
     image = cv2.imread(TEMP_TITLE)
     text = pytesseract.image_to_string(image, lang='kor')
-    print(text)
 
-    response = common_search(text)
+    response = common_search(text, TRADE_ENGLISH)
+    os.remove(TEMP_TITLE)
+    return response
+
+@app.route("/query/international-payment/eng", methods=['POST'])
+def search_document_trade_english_eng():
+    TEMP_TITLE = 'international_payment_eng.jpg'
+    file_obj = request.files.get('File')
+    file_obj.save(TEMP_TITLE)
+
+    image = cv2.imread(TEMP_TITLE)
+    text = pytesseract.image_to_string(image)
+
+    response = common_search(text, INTERNATIONAL_PAYMENT)
+    os.remove(TEMP_TITLE)
+    return response
+
+@app.route("/query/international-payment/kor", methods=['POST'])
+def search_document_trade_english_kor():
+    TEMP_TITLE = 'international_payment_kor.jpg'
+    file_obj = request.files.get('File')
+    file_obj.save(TEMP_TITLE)
+
+    image = cv2.imread(TEMP_TITLE)
+    text = pytesseract.image_to_string(image, lang='kor')
+
+    response = common_search(text, INTERNATIONAL_PAYMENT)
     os.remove(TEMP_TITLE)
     return response
 

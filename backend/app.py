@@ -12,7 +12,10 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-es = Elasticsearch()
+# es = Elasticsearch()
+es = Elasticsearch(
+    hosts=['http://elastic-container:9200']
+)
 
 TRADE_ENGLISH = 'trade_english'
 INTERNATIONAL_PAYMENT = 'international_payment'

@@ -2,14 +2,24 @@
 
 ## Prerequisite
 
+Make docker image for FE & BE
+
+Current path example : `~/workspace/trade_quiz`
+
 ```
-python -m venv venv
-venv\Script\activate
+cd backend
+docker build -t backend .
+
+cd .. && cd frontend
+docker build -t frontend .
 ```
 
 ## Install
 
+Run containers in docker compose
+
+Current path example : `~/workspace/trade_quiz`
+
 ```
-pip install -e .
-pip install -r requirements.txt
+docker-compose up -d
 ```

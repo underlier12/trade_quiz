@@ -74,7 +74,7 @@ def search_document_trade_english_kor():
     return response
 
 @app.route("/query/international-payment/eng", methods=['POST'])
-def search_document_trade_english_eng():
+def search_document_international_payment_eng_eng():
     TEMP_TITLE = 'international_payment_eng.jpg'
     file_obj = request.files.get('File')
     file_obj.save(TEMP_TITLE)
@@ -87,7 +87,7 @@ def search_document_trade_english_eng():
     return response
 
 @app.route("/query/international-payment/kor", methods=['POST'])
-def search_document_trade_english_kor():
+def search_document_international_payment_eng_kor():
     TEMP_TITLE = 'international_payment_kor.jpg'
     file_obj = request.files.get('File')
     file_obj.save(TEMP_TITLE)

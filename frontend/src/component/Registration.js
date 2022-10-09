@@ -61,8 +61,8 @@ function Registration() {
                             <label className='form-label'>Version</label>
                             {/* <input className='form-control' {...register('version', {required: true})} /> */}
                             <select className='form-control' {...register('version')}>
-                                <option value="english">English</option>
-                                <option value="korean">Korean</option>
+                                <option value="eng">English</option>
+                                <option value="kor">Korean</option>
                             </select>
                         </div>
                         <div className='form-group mb-1'>

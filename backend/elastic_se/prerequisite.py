@@ -4,24 +4,20 @@ import json
 
 es = Elasticsearch()
 
-TRADE_ENGLISH_MAPPING_PATH = 'elastic_se/trade_english_mapping.json'
-with open(TRADE_ENGLISH_MAPPING_PATH) as f:
+COMMON_MAPPING_PATH = 'elastic_se/trade_english_mapping.json'
+with open(COMMON_MAPPING_PATH) as f:
     mapping = json.load(f)
 
-INDEX = 'trade_english'
-es.indices.create(
-    index=INDEX,
-    ignore=400,
-    body=mapping
-)
+INDEX_LIST = [
+    'trade-english', 
+    'international-payment', 
+    'fta', 
+    'digital-trading'
+]
 
-# INTERNATIONAL_PAYMENT_MAPPING_PATH = 'elastic_se/trade_english_mapping.json'
-# with open(INTERNATIONAL_PAYMENT_MAPPING_PATH) as f:
-#     mapping = json.load(f)
-
-INDEX = 'international_payment'
-es.indices.create(
-    index=INDEX,
+for index in INDEX_LIST:
+    es.indices.create(
+    index=index,
     ignore=400,
     body=mapping
 )

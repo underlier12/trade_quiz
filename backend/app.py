@@ -36,7 +36,7 @@ def _common_search(text, index):
     )
     hits = res['hits']['hits']
     if hits:
-        output = hits[0]
+        output = hits[:5]
     if not hits:
         output = 'No results'
 

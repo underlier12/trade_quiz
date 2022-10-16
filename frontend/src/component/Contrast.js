@@ -58,6 +58,8 @@ function Contrast() {
                             <select className='form-control' {...register('subject')}>
                                 <option value="trade-english">Trade english</option>
                                 <option value="international-payment">International payment</option>
+                                <option value="fta">FTA</option>
+                                <option value="digital-trading">Digital trading</option>
                             </select>
                         </div>
                         <div className='form-group mb-1'>
